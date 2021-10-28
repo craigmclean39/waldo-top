@@ -19,12 +19,12 @@ function App() {
       path: 'stage-2',
     },
     {
-      id: 'waldo-stage-2',
-      path: 'stage-2',
+      id: 'waldo-stage-3',
+      path: 'stage-3',
     },
     {
-      id: 'waldo-stage-2',
-      path: 'stage-2',
+      id: 'waldo-stage-4',
+      path: 'stage-4',
     },
   ]);
 
@@ -37,8 +37,8 @@ function App() {
       <HashRouter>
         <Switch>
           <Route exact path='/' component={Home}></Route>
-          <Route exact path='/pregame/:id' component={Pregame}></Route>
-          <Route path='/leaderboard/:id' component={Leaderboard}></Route>
+          <Route exact path='/pregame' component={Pregame}></Route>
+          <Route path='/leaderboard' component={Leaderboard}></Route>
           <Route path='/gameplay' component={Gameplay}></Route>
         </Switch>
       </HashRouter>

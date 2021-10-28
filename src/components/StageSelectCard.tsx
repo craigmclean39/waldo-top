@@ -1,5 +1,18 @@
-const StageSelectCard = () => {
-  return <div>Stage</div>;
+import { StageSelectCardProps } from '../types';
+
+const StageSelectCard: React.FC<StageSelectCardProps> = ({
+  stage,
+  selectStage,
+}) => {
+  const reqImg =
+    require(`../images/stages/${stage.path}/thumbnail.png`).default;
+
+  return (
+    <img
+      src={reqImg}
+      alt={stage.id}
+      onClick={() => selectStage(stage.id)}></img>
+  );
 };
 
 export { StageSelectCard };
