@@ -8,10 +8,7 @@ const StageSelectCard: React.FC<StageSelectCardProps> = ({
     require(`../images/stages/${stage.path}/thumbnail.png`).default;
 
   return (
-    <img
-      src={reqImg}
-      alt={stage.id}
-      onClick={() => selectStage(stage.id)}></img>
+    <img src={reqImg} alt={stage.id} onClick={() => selectStage(stage)}></img>
   );
 };
 

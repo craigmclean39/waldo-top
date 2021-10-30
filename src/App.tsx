@@ -5,7 +5,7 @@ import { Pregame } from './pages/Pregame';
 import { Gameplay } from './pages/Gameplay';
 import { Leaderboard } from './pages/Leaderboard';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import { Stage } from './types';
+import { Stage, Character } from './types';
 import { StageContext, StageContextType } from './context/StageContext';
 
 function App() {
@@ -13,23 +13,35 @@ function App() {
     {
       id: 'waldo-stage-1',
       path: 'stage-1',
+      characterIds: ['waldo', 'wenda', 'whitebeard'],
     },
     {
       id: 'waldo-stage-2',
       path: 'stage-2',
+      characterIds: ['waldo', 'odlaw', 'wenda', 'whitebeard'],
     },
     {
       id: 'waldo-stage-3',
       path: 'stage-3',
+      characterIds: ['waldo', 'odlaw', 'whitebeard'],
     },
     {
       id: 'waldo-stage-4',
       path: 'stage-4',
+      characterIds: ['waldo', 'wenda'],
     },
+  ]);
+
+  const characters = useRef<Character[]>([
+    { id: 'waldo', path: 'waldo', displayName: 'Waldo' },
+    { id: 'odlaw', path: 'odlaw', displayName: 'Odlaw' },
+    { id: 'wenda', path: 'wenda', displayName: 'Wenda' },
+    { id: 'whitebeard', path: 'whitebeard', displayName: 'Wizard Whitebeard' },
   ]);
 
   let stageContextValue: StageContextType = {
     stages: stages.current,
+    characters: characters.current,
   };
 
   return (
