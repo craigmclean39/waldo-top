@@ -15,6 +15,11 @@ export interface Position {
   coordinates: number[];
 }
 
+export interface CharacterStatus {
+  characterId: string;
+  found: boolean;
+}
+
 //PROPS
 export interface StageSelectProps {
   stages: Stage[];
@@ -29,4 +34,6 @@ export interface StageSelectCardProps {
 export interface CharacterSelectProps {
   x: number;
   y: number;
+  checkCharacter(characterId: string): any;
+  characters: Character[];
 }

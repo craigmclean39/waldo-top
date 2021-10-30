@@ -1,6 +1,6 @@
-import { useLocation } from 'react-router';
-import { Stage, Position, Character } from '../types';
-import { useRef, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
+import { Stage, Position, Character, CharacterStatus } from '../types';
+import { useEffect, useRef, useState } from 'react';
 import { CharacterSelect } from '../components/CharacterSelect';
 
 interface GameplayLocationState {
@@ -14,44 +14,42 @@ interface GameplayLocationState {
 const Gameplay = () => {
   const location = useLocation() as GameplayLocationState;
   const image = useRef(location.state.image);
-  const id = useRef(location.state.stage.id);
   const stage = useRef(location.state.stage);
+  const characters = useRef(location.state.characters);
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [characterSelectX, setCharacterSelectX] = useState(0);
   const [characterSelectY, setCharacterSelectY] = useState(0);
+  const [positions, setPositions] = useState<Position[]>([]);
+  const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
+  const history = useHistory();
 
-  const positions: Position[] = [
-    { characterId: 'waldo', coordinates: [762, 272] },
-    { characterId: 'whitebeard', coordinates: [1110, 220] },
-    { characterId: 'wenda', coordinates: [362, 414] },
-  ];
+  useEffect(() => {
+    const charPositions: Position[] = [
+      { characterId: 'waldo', coordinates: [762, 272] },
+      { characterId: 'whitebeard', coordinates: [1110, 220] },
+      { characterId: 'wenda', coordinates: [362, 414] },
+    ];
+    setPositions(charPositions);
 
-  const checkClick = (e: any) => {
+    setCharacterStatus(
+      characters.current.map((character) => {
+        const charStatus: CharacterStatus = {
+          characterId: character.id,
+          found: false,
+        };
+
+        return charStatus;
+      })
+    );
+  }, []);
+
+  const handleClick = (e: any) => {
     setShowCharacterSelect(!showCharacterSelect);
     // console.log(e);
     const xClick = e.pageX - e.target.offsetLeft;
     const yClick = e.pageY - e.target.offsetTop;
     setCharacterSelectX(xClick);
     setCharacterSelectY(yClick);
-
-    for (let i = 0; i < stage.current.characterIds.length; i++) {
-      for (let j = 0; j < positions.length; j++) {
-        if (stage.current.characterIds[i] === positions[j].characterId) {
-          //Check coordinate in a radius
-          if (
-            checkIfClickIsWithinRadiusOfCoordinates(
-              xClick,
-              yClick,
-              positions[j].coordinates[0],
-              positions[j].coordinates[1],
-              25
-            )
-          ) {
-            console.log('You found ' + positions[j].characterId);
-          }
-        }
-      }
-    }
   };
 
   const checkIfClickIsWithinRadiusOfCoordinates = (
@@ -72,16 +70,73 @@ const Gameplay = () => {
     return false;
   };
 
+  const checkCharacter = (characterId: string) => {
+    console.log(characterId);
+    setShowCharacterSelect(false);
+
+    for (let j = 0; j < positions.length; j++) {
+      if (characterId === positions[j].characterId) {
+        //Check coordinate in a radius
+        if (
+          checkIfClickIsWithinRadiusOfCoordinates(
+            characterSelectX,
+            characterSelectY,
+            positions[j].coordinates[0],
+            positions[j].coordinates[1],
+            25
+          )
+        ) {
+          console.log('You clicked ' + characterId);
+          for (let i = 0; i < characterStatus.length; i++) {
+            if (characterStatus[i].characterId === characterId) {
+              if (!characterStatus[i].found) {
+                console.log('You found ' + characterId);
+                const newCharacterStatus = [...characterStatus];
+                newCharacterStatus[i].found = true;
+                setCharacterStatus(newCharacterStatus);
+                break;
+              }
+            }
+          }
+        }
+        break;
+      }
+    }
+
+    checkGameOver();
+  };
+
+  const checkGameOver = () => {
+    let gameOver = true;
+    for (let i = 0; i < characterStatus.length; i++) {
+      if (characterStatus[i].found === false) {
+        gameOver = false;
+        break;
+      }
+    }
+
+    if (gameOver) {
+      history.push({
+        pathname: '/leaderboard',
+      });
+    }
+  };
+
   return (
     <>
       {showCharacterSelect ? (
-        <CharacterSelect x={characterSelectX} y={characterSelectY} />
+        <CharacterSelect
+          x={characterSelectX}
+          y={characterSelectY}
+          checkCharacter={checkCharacter}
+          characters={characters.current}
+        />
       ) : null}
       <img
         src={image.current}
-        alt={id.current}
+        alt={stage.current.id}
         onClick={(e) => {
-          checkClick(e);
+          handleClick(e);
         }}></img>
     </>
   );
