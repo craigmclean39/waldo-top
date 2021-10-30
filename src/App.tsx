@@ -1,10 +1,9 @@
-import React from 'react';
 import { useRef } from 'react';
 import { Home } from './pages/Home';
 import { Pregame } from './pages/Pregame';
 import { Gameplay } from './pages/Gameplay';
 import { Leaderboard } from './pages/Leaderboard';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { Stage, Character } from './types';
 import { StageContext, StageContextType } from './context/StageContext';
 
@@ -46,14 +45,14 @@ function App() {
 
   return (
     <StageContext.Provider value={stageContextValue}>
-      <HashRouter>
+      <BrowserRouter>
         <Switch>
           <Route exact path='/' component={Home}></Route>
           <Route exact path='/pregame' component={Pregame}></Route>
           <Route path='/leaderboard' component={Leaderboard}></Route>
           <Route path='/gameplay' component={Gameplay}></Route>
         </Switch>
-      </HashRouter>
+      </BrowserRouter>
     </StageContext.Provider>
   );
 }

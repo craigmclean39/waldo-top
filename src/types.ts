@@ -10,6 +10,12 @@ export interface Character {
   path: string;
 }
 
+export interface Position {
+  characterId: string;
+  coordinates: number[];
+}
+
+//PROPS
 export interface StageSelectProps {
   stages: Stage[];
   selectStage(stage: Stage): any;
@@ -18,4 +24,9 @@ export interface StageSelectProps {
 export interface StageSelectCardProps {
   stage: Stage;
   selectStage(stage: Stage): any;
+}
+
+export interface CharacterSelectProps {
+  x: number;
+  y: number;
 }

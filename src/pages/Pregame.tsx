@@ -18,9 +18,9 @@ const Pregame = () => {
   const charImages = location.state.characters.map((character) => {
     return (
       <img
-        src={
-          require(`../images/characters/${character.path}.png`).default
-        }></img>
+        src={require(`../images/characters/${character.path}.png`).default}
+        alt={character.displayName}
+        key={character.path}></img>
     );
   });
 
@@ -34,6 +34,7 @@ const Pregame = () => {
           state: {
             stage: location.state.stage,
             image: reqImg,
+            characters: location.state.characters,
           },
         }}>
         Game
