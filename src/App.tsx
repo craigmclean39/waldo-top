@@ -13,22 +13,26 @@ function App() {
     {
       id: 'waldo-stage-1',
       path: 'stage-1',
+      displayName: 'The Deep Sea Divers',
       characterIds: ['waldo', 'wenda', 'whitebeard'],
     },
     {
       id: 'waldo-stage-2',
       path: 'stage-2',
-      characterIds: ['waldo', 'odlaw', 'wenda', 'whitebeard'],
+      displayName: 'The Great Ball Game Players',
+      characterIds: ['waldo', 'wenda', 'odlaw', 'whitebeard'],
     },
     {
       id: 'waldo-stage-3',
       path: 'stage-3',
-      characterIds: ['waldo', 'odlaw', 'whitebeard'],
+      displayName: 'The Great Escape',
+      characterIds: ['waldo', 'wenda', 'odlaw', 'whitebeard'],
     },
     {
       id: 'waldo-stage-4',
       path: 'stage-4',
-      characterIds: ['waldo', 'wenda'],
+      displayName: 'Horseplay in Troy',
+      characterIds: ['waldo', 'wenda', 'odlaw', 'whitebeard'],
     },
   ]);
 

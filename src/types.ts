@@ -1,6 +1,7 @@
 export interface Stage {
   id: string;
   path: string;
+  displayName: string;
   characterIds: string[];
 }
 
