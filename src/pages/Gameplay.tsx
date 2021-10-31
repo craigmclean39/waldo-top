@@ -116,10 +116,14 @@ const Gameplay = () => {
     }
 
     if (gameOver) {
-      history.push({
-        pathname: '/leaderboard',
-      });
+      setInterval(gotoLeaderboard, 1000);
     }
+  };
+
+  const gotoLeaderboard = () => {
+    history.push({
+      pathname: '/leaderboard',
+    });
   };
 
   return (
