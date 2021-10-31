@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "waldo-top",
+    "waldo": "waldo-top"
+  },
+  "targets": {}
+}
