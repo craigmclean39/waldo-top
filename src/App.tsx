@@ -6,6 +6,7 @@ import { Leaderboard } from './pages/Leaderboard';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { Stage, Character } from './types';
 import { StageContext, StageContextType } from './context/StageContext';
+import { useFirebase } from './hooks/useFirebase';
 
 function App() {
   const stages = useRef<Stage[]>([
@@ -42,6 +43,8 @@ function App() {
     stages: stages.current,
     characters: characters.current,
   };
+
+  useFirebase();
 
   return (
     <StageContext.Provider value={stageContextValue}>

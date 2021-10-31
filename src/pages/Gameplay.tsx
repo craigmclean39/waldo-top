@@ -1,7 +1,9 @@
 import { useHistory, useLocation } from 'react-router';
-import { Stage, Position, Character, CharacterStatus } from '../types';
+import { Stage, Character, CharacterStatus } from '../types';
 import { useEffect, useRef, useState } from 'react';
 import { CharacterSelect } from '../components/CharacterSelect';
+
+import { getFirestore, getDoc, doc } from 'firebase/firestore';
 
 interface GameplayLocationState {
   state: {
@@ -19,25 +21,16 @@ const Gameplay = () => {
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [characterSelectX, setCharacterSelectX] = useState(0);
   const [characterSelectY, setCharacterSelectY] = useState(0);
-  const [positions, setPositions] = useState<Position[]>([]);
   const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
   const history = useHistory();
 
   useEffect(() => {
-    const charPositions: Position[] = [
-      { characterId: 'waldo', coordinates: [762, 272] },
-      { characterId: 'whitebeard', coordinates: [1110, 220] },
-      { characterId: 'wenda', coordinates: [362, 414] },
-    ];
-    setPositions(charPositions);
-
     setCharacterStatus(
       characters.current.map((character) => {
         const charStatus: CharacterStatus = {
           characterId: character.id,
           found: false,
         };
-
         return charStatus;
       })
     );
@@ -70,39 +63,47 @@ const Gameplay = () => {
     return false;
   };
 
-  const checkCharacter = (characterId: string) => {
-    console.log(characterId);
-    setShowCharacterSelect(false);
+  const checkCharacter = async (characterId: string) => {
+    console.log(stage.current.id);
 
-    for (let j = 0; j < positions.length; j++) {
-      if (characterId === positions[j].characterId) {
-        //Check coordinate in a radius
-        if (
-          checkIfClickIsWithinRadiusOfCoordinates(
-            characterSelectX,
-            characterSelectY,
-            positions[j].coordinates[0],
-            positions[j].coordinates[1],
-            25
-          )
-        ) {
-          console.log('You clicked ' + characterId);
-          for (let i = 0; i < characterStatus.length; i++) {
-            if (characterStatus[i].characterId === characterId) {
-              if (!characterStatus[i].found) {
-                console.log('You found ' + characterId);
-                const newCharacterStatus = [...characterStatus];
-                newCharacterStatus[i].found = true;
-                setCharacterStatus(newCharacterStatus);
-                break;
-              }
+    const docRef = doc(
+      getFirestore(),
+      'characterPositions',
+      `${stage.current.path}`
+    );
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const charPosition = docSnap.get(characterId);
+
+      if (
+        checkIfClickIsWithinRadiusOfCoordinates(
+          characterSelectX,
+          characterSelectY,
+          charPosition[0],
+          charPosition[1],
+          25
+        )
+      ) {
+        console.log('You clicked ' + characterId);
+        for (let i = 0; i < characterStatus.length; i++) {
+          if (characterStatus[i].characterId === characterId) {
+            if (!characterStatus[i].found) {
+              console.log('You found ' + characterId);
+              const newCharacterStatus = [...characterStatus];
+              newCharacterStatus[i].found = true;
+              setCharacterStatus(newCharacterStatus);
+              break;
             }
           }
         }
-        break;
       }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log('No such document!');
     }
 
+    setShowCharacterSelect(false);
     checkGameOver();
   };
 
