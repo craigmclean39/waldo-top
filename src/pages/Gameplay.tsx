@@ -3,7 +3,19 @@ import { Stage, Character, CharacterStatus } from '../types';
 import { useEffect, useRef, useState } from 'react';
 import { CharacterSelect } from '../components/CharacterSelect';
 
-import { getFirestore, getDoc, doc } from 'firebase/firestore';
+import {
+  getFirestore,
+  getDoc,
+  doc,
+  addDoc,
+  setDoc,
+  collection,
+  serverTimestamp,
+  DocumentReference,
+  DocumentData,
+  FieldValue,
+} from 'firebase/firestore';
+import { async } from '@firebase/util';
 
 interface GameplayLocationState {
   state: {
@@ -22,6 +34,7 @@ const Gameplay = () => {
   const [characterSelectX, setCharacterSelectX] = useState(0);
   const [characterSelectY, setCharacterSelectY] = useState(0);
   const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
+  const [userTimestampsDocId, setUserTimestampsDocId] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -34,6 +47,11 @@ const Gameplay = () => {
         return charStatus;
       })
     );
+  }, []);
+
+  useEffect(() => {
+    //Make an entry in the database with a server timestamp for leaderboard purposes
+    createUserSessionInDbWithStartTime();
   }, []);
 
   const handleClick = (e: any) => {
@@ -61,6 +79,63 @@ const Gameplay = () => {
       return true;
     }
     return false;
+  };
+
+  const createUserSessionInDbWithStartTime = async () => {
+    const docRef = await addDoc(collection(getFirestore(), 'userTimestamps'), {
+      startTime: serverTimestamp(),
+    });
+    console.log('Document written with ID: ', docRef.id);
+    setUserTimestampsDocId(docRef.id);
+    return docRef.id;
+  };
+
+  const addEndTimeToUserSession = async (
+    docRef: DocumentReference<DocumentData>,
+    endTime: FieldValue
+  ) => {
+    await setDoc(
+      docRef,
+      {
+        endTime: endTime,
+      },
+      { merge: true }
+    );
+  };
+
+  const addTotalTimeToUserSession = async (
+    docRef: DocumentReference<DocumentData>,
+    totalTime: number
+  ) => {
+    console.log('Total User Time on Level: ' + totalTime);
+    await setDoc(
+      docRef,
+      {
+        totalTime: totalTime,
+      },
+      { merge: true }
+    );
+  };
+
+  const updateUserSessionWithEndTimeAndTotalTime = async () => {
+    const endTime = serverTimestamp();
+    const docRef = doc(getFirestore(), 'userTimestamps', userTimestampsDocId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      await addEndTimeToUserSession(docRef, endTime);
+
+      const newSnap = await getDoc(docRef);
+
+      if (newSnap.exists()) {
+        await addTotalTimeToUserSession(
+          docRef,
+          newSnap.data().endTime.seconds - newSnap.data().startTime.seconds
+        );
+      }
+    } else {
+      console.log('No such document!');
+    }
   };
 
   const checkCharacter = async (characterId: string) => {
@@ -107,7 +182,7 @@ const Gameplay = () => {
     checkGameOver();
   };
 
-  const checkGameOver = () => {
+  const checkGameOver = async () => {
     let gameOver = true;
     for (let i = 0; i < characterStatus.length; i++) {
       if (characterStatus[i].found === false) {
@@ -117,6 +192,7 @@ const Gameplay = () => {
     }
 
     if (gameOver) {
+      await updateUserSessionWithEndTimeAndTotalTime();
       setInterval(gotoLeaderboard, 1000);
     }
   };
