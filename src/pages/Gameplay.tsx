@@ -81,7 +81,7 @@ const Gameplay = () => {
     const docRef = await addDoc(collection(getFirestore(), 'userTimestamps'), {
       startTime: serverTimestamp(),
     });
-    console.log('Document written with ID: ', docRef.id);
+    // ('Document written with ID: ', docRef.id);
     setUserSessionId(docRef.id);
     return docRef.id;
   };
@@ -103,7 +103,7 @@ const Gameplay = () => {
     docRef: DocumentReference<DocumentData>,
     totalTime: number
   ) => {
-    console.log('Total User Time on Level: ' + totalTime);
+    // ('Total User Time on Level: ' + totalTime);
     await setDoc(
       docRef,
       {
@@ -134,12 +134,12 @@ const Gameplay = () => {
         await addTotalTimeToUserSession(docRef, timeInSeconds);
       }
     } else {
-      console.log('No such document!');
+      // console.log('No such document!');
     }
   };
 
   const checkCharacter = async (characterId: string) => {
-    console.log(stage.current.id);
+    // console.log(stage.current.id);
 
     const docRef = doc(
       getFirestore(),
@@ -175,7 +175,7 @@ const Gameplay = () => {
       }
     } else {
       // doc.data() will be undefined in this case
-      console.log('No such document!');
+      // console.log('No such document!');
     }
 
     setShowCharacterSelect(false);

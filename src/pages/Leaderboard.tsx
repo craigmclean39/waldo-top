@@ -6,12 +6,11 @@ import {
   getDoc,
   doc,
   addDoc,
-  setDoc,
   collection,
-  serverTimestamp,
-  DocumentReference,
-  DocumentData,
-  FieldValue,
+  query,
+  orderBy,
+  limit,
+  getDocs,
 } from 'firebase/firestore';
 
 interface LeaderboardLocationState {
@@ -21,28 +20,50 @@ interface LeaderboardLocationState {
   };
 }
 
+interface LeaderboardEntry {
+  name: string;
+  score: number;
+}
+
 const Leaderboard = () => {
   const location = useLocation() as LeaderboardLocationState;
   const sessionId = useRef(location.state.sessionId);
   const stage = useRef(location.state.stage);
   const [nameEntered, setNameEntered] = useState(false);
   const [name, setName] = useState('');
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
 
-  const submitName = (e: SyntheticEvent) => {
+  const submitName = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    console.log('Name Submitted');
-    addUserScoreToLeaderboard();
+    // console.log('Name Submitted');
+    await addUserScoreToLeaderboard();
+    await loadLeaderboard();
   };
 
-  /*   const createUserSessionInDbWithStartTime = async () => {
-    const docRef = await addDoc(collection(getFirestore(), 'userTimestamps'), {
-      startTime: serverTimestamp(),
+  const loadLeaderboard = async () => {
+    const leaderBoardRef = collection(
+      getFirestore(),
+      `${stage.current.path}-leaderboard`
+    );
+    const q = query(leaderBoardRef, orderBy('score'), limit(10));
+
+    const loadedLeaderboard: LeaderboardEntry[] = [];
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      // console.log(doc.id, ' => ', doc.data());
+      const entry: LeaderboardEntry = {
+        name: doc.data().name,
+        score: doc.data().score,
+      };
+      loadedLeaderboard.push(entry);
     });
-    console.log('Document written with ID: ', docRef.id);
-    setUserSessionId(docRef.id);
-    return docRef.id;
-  }; */
+
+    setLeaderboard(loadedLeaderboard);
+  };
 
   const addUserScoreToLeaderboard = async () => {
     const userScore = await getUsersScore();
@@ -67,7 +88,7 @@ const Leaderboard = () => {
   };
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e);
+    // console.log(e);
     setName(e.currentTarget.value);
   };
 
@@ -81,6 +102,14 @@ const Leaderboard = () => {
   ) : (
     <>
       <div>Leaderboard</div>
+      {leaderboard.map((entry) => {
+        return (
+          <div
+            key={
+              entry.name + entry.score
+            }>{`${entry.name} ${entry.score}`}</div>
+        );
+      })}
     </>
   );
 };
