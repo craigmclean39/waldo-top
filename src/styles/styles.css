@@ -2,10 +2,12 @@
   --waldo-red: #d8232a;
   --waldo-blue: #368bf6;
   --waldo-dark-red: #c12f22;
+  --title-font: 'Luckiest Guy';
+  --default-font: 'Open Sans';
 }
 
 html {
-  font-family: 'Open Sans';
+  font-family: var(--default-font);
   box-sizing: border-box;
 }
 
@@ -13,22 +15,44 @@ html {
   position: absolute;
   top: 50px;
   left: 50px;
-  border: solid 1px red;
   display: flex;
   background-color: white;
+  padding: 0.5rem 0.7rem 0rem 0.7rem;
+  border-bottom: solid 0.5rem var(--waldo-red);
+  box-shadow: 20px 20px 30px -20px rgba(0, 0, 0, 1);
 }
 
 .character-select__character {
   width: 40px;
   height: auto;
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+}
+
+.character--selectable {
+  cursor: pointer;
+}
+
+.character--inactive {
+  opacity: 0.5;
 }
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   background-color: var(--waldo-red);
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100px;
+  max-height: 100px;
+}
+
+.invisible-header {
+  height: 100px;
+  max-height: 100px;
 }
 
 .innerHeader {
@@ -36,12 +60,12 @@ html {
 }
 
 .header__logo {
-  width: clamp(75px, 8vw, 125px);
+  height: clamp(75px, 8vw, 100px);
 }
 
 .header__title {
-  font-family: 'Luckiest Guy';
-  font-size: 4rem;
+  font-family: var(--title-font);
+  font-size: clamp(1.5rem, 5vw, 4rem);
   -webkit-text-stroke: 2px black; /* width and color */
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -74,26 +98,98 @@ html {
 }
 
 .inner-container {
-  min-width: clamp(0px, 100vw, 1800px);
-  max-width: 1800px;
+  min-width: clamp(0px, 100vw, 1400px);
+  max-width: 1400px;
+}
+
+.inner-container-flex {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
+}
+
+.stage-select__title {
+  color: var(--waldo-blue);
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 1rem;
 }
 
 .stage-card {
   background-color: var(--waldo-red);
   margin: 1rem;
   width: min-content;
+  max-width: 90vw;
 }
 
 .stage-card__title {
-  padding: 1rem;
+  padding: clamp(0.5rem, 2vh, 1rem);
   color: white;
   font-weight: 700;
+  font-size: clamp(0.5rem, 2vh, 1rem);
 }
 
 .stage-card__image {
   margin-bottom: 0.25rem;
   margin-left: 0.25rem;
   margin-right: 0.25rem;
+  width: clamp(200px, 80vw, 600px);
+}
+
+.pregame-flex {
+  display: flex;
+  justify-content: center;
+}
+
+.pregame {
+  display: flex;
+  width: clamp(0px, 100vw, 1200px);
+  flex-direction: column;
+  align-items: center;
+}
+
+.pregame__characters-container {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+}
+
+.pregame__character {
+  width: clamp(0px, 25vw, 300px);
+}
+
+.pregame__start-game-button {
+  border: none;
+  width: clamp(0px, 90vw, 600px);
+  background-color: var(--waldo-blue);
+  text-align: center;
+  font-weight: 800;
+  color: white;
+  padding: 1rem 2rem;
+
+  border-radius: 0.25rem;
+  border-bottom: solid 0.25rem #63a6f8;
+  margin-top: 2rem;
+}
+
+.pregame__start-game-button:hover {
+  background-color: #0b6fea;
+  border-bottom: solid 0.25rem #2985f5;
+}
+
+.pregame__text-container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.pregame__title {
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: var(--waldo-blue);
+  margin-bottom: 0.25rem;
+}
+
+.pregame__description {
+  margin-left: 1rem;
 }
