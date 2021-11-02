@@ -15,7 +15,6 @@ import {
   DocumentData,
   FieldValue,
 } from 'firebase/firestore';
-import { async } from '@firebase/util';
 
 interface GameplayLocationState {
   state: {
@@ -34,7 +33,7 @@ const Gameplay = () => {
   const [characterSelectX, setCharacterSelectX] = useState(0);
   const [characterSelectY, setCharacterSelectY] = useState(0);
   const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
-  const [userTimestampsDocId, setUserTimestampsDocId] = useState('');
+  const [userSessionId, setUserSessionId] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -71,10 +70,7 @@ const Gameplay = () => {
     radius: number
   ) => {
     if (
-      xClick >= x - radius &&
-      xClick <= x + radius &&
-      yClick >= y - radius &&
-      yClick <= y + radius
+      Math.sqrt(Math.pow(xClick - x, 2) + Math.pow(yClick - y, 2)) <= radius
     ) {
       return true;
     }
@@ -86,7 +82,7 @@ const Gameplay = () => {
       startTime: serverTimestamp(),
     });
     console.log('Document written with ID: ', docRef.id);
-    setUserTimestampsDocId(docRef.id);
+    setUserSessionId(docRef.id);
     return docRef.id;
   };
 
@@ -119,7 +115,7 @@ const Gameplay = () => {
 
   const updateUserSessionWithEndTimeAndTotalTime = async () => {
     const endTime = serverTimestamp();
-    const docRef = doc(getFirestore(), 'userTimestamps', userTimestampsDocId);
+    const docRef = doc(getFirestore(), 'userTimestamps', userSessionId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -128,10 +124,14 @@ const Gameplay = () => {
       const newSnap = await getDoc(docRef);
 
       if (newSnap.exists()) {
-        await addTotalTimeToUserSession(
-          docRef,
-          newSnap.data().endTime.seconds - newSnap.data().startTime.seconds
-        );
+        let timeInSeconds =
+          (newSnap.data().endTime.toMillis() -
+            newSnap.data().startTime.toMillis()) /
+          1000;
+
+        timeInSeconds = Number(timeInSeconds.toPrecision(4));
+
+        await addTotalTimeToUserSession(docRef, timeInSeconds);
       }
     } else {
       console.log('No such document!');
@@ -160,11 +160,11 @@ const Gameplay = () => {
           25
         )
       ) {
-        console.log('You clicked ' + characterId);
+        // console.log('You clicked ' + characterId);
         for (let i = 0; i < characterStatus.length; i++) {
           if (characterStatus[i].characterId === characterId) {
             if (!characterStatus[i].found) {
-              console.log('You found ' + characterId);
+              // console.log('You found ' + characterId);
               const newCharacterStatus = [...characterStatus];
               newCharacterStatus[i].found = true;
               setCharacterStatus(newCharacterStatus);
@@ -200,6 +200,10 @@ const Gameplay = () => {
   const gotoLeaderboard = () => {
     history.push({
       pathname: '/leaderboard',
+      state: {
+        stage: stage.current,
+        sessionId: userSessionId,
+      },
     });
   };
 
