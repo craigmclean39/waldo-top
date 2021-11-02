@@ -19,6 +19,7 @@ const Pregame = () => {
   const charImages = location.state.characters.map((character) => {
     return (
       <img
+        className='pregame__character'
         src={require(`../images/characters/${character.path}.png`).default}
         alt={character.displayName}
         key={character.path}></img>
@@ -28,20 +29,31 @@ const Pregame = () => {
   return (
     <>
       <Header />
-      <div>Pregame {id}</div>
-      <div>{charImages}</div>
-      <Link
-        to={{
-          pathname: '/gameplay',
-          state: {
-            stage: location.state.stage,
-            image: reqImg,
-            characters: location.state.characters,
-          },
-        }}
-        replace>
-        Game
-      </Link>
+      <div className='pregame-flex'>
+        <div className='pregame'>
+          <div className='pregame__text-container'>
+            <h3 className='pregame__title'>{stage.displayName}</h3>
+            <p className='pregame__description'>
+              Find the following characters
+            </p>
+          </div>
+          <div className='pregame__characters-container'>{charImages}</div>
+
+          <Link
+            className='pregame__start-game-button link'
+            to={{
+              pathname: '/gameplay',
+              state: {
+                stage: location.state.stage,
+                image: reqImg,
+                characters: location.state.characters,
+              },
+            }}
+            replace>
+            START GAME
+          </Link>
+        </div>
+      </div>
     </>
   );
 };

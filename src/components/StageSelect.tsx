@@ -11,7 +11,10 @@ const StageSelect: React.FC<StageSelectProps> = ({ stages, selectStage }) => {
   return (
     <>
       <div className='full-screen-flex'>
-        <div className='inner-container'>{cards}</div>
+        <div className='inner-container'>
+          <h3 className='stage-select__title'>Select your stage</h3>
+          <div className='inner-container-flex'>{cards}</div>
+        </div>
       </div>
     </>
   );

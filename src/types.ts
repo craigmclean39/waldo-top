@@ -37,4 +37,5 @@ export interface CharacterSelectProps {
   y: number;
   checkCharacter(characterId: string): any;
   characters: Character[];
+  characterStatus: CharacterStatus[];
 }

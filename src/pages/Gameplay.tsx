@@ -221,6 +221,7 @@ const Gameplay = () => {
           y={characterOverlayY}
           checkCharacter={checkCharacter}
           characters={characters.current}
+          characterStatus={characterStatus}
         />
       ) : null}
       <img
