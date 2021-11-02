@@ -38,7 +38,8 @@ const Pregame = () => {
             image: reqImg,
             characters: location.state.characters,
           },
-        }}>
+        }}
+        replace>
         Game
       </Link>
     </>

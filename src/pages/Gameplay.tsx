@@ -198,12 +198,12 @@ const Gameplay = () => {
 
     if (gameOver) {
       await updateUserSessionWithEndTimeAndTotalTime();
-      setInterval(gotoLeaderboard, 1000);
+      setTimeout(gotoLeaderboard, 1000);
     }
   };
 
   const gotoLeaderboard = () => {
-    history.push({
+    history.replace({
       pathname: '/leaderboard',
       state: {
         stage: stage.current,
