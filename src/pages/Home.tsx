@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { StageContext, StageContextType } from '../context/StageContext';
 import { StageSelect } from '../components/StageSelect';
 import { StageSelectProps, Stage, Character } from '../types';
+import { Header } from '../components/Header';
 
 const Home = () => {
   const { stages, characters } = useContext(StageContext) as StageContextType;
@@ -32,7 +33,11 @@ const Home = () => {
     selectStage: selectStage,
   };
 
-  return <StageSelect {...stageSelectProps} />;
+  return (
+    <>
+      <Header /> <StageSelect {...stageSelectProps} />
+    </>
+  );
 };
 
 export { Home };

@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Stage, Character } from '../types';
+import { Header } from '../components/Header';
 
 interface PregameLocationState {
   state: {
@@ -26,6 +27,7 @@ const Pregame = () => {
 
   return (
     <>
+      <Header />
       <div>Pregame {id}</div>
       <div>{charImages}</div>
       <Link

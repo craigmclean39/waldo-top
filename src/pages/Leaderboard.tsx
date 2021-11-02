@@ -1,6 +1,6 @@
 import { Stage } from '../types';
-import { useHistory, useLocation } from 'react-router';
-import { useEffect, useRef, useState, SyntheticEvent } from 'react';
+import { useLocation } from 'react-router';
+import { useRef, useState, SyntheticEvent } from 'react';
 import {
   getFirestore,
   getDoc,
@@ -12,6 +12,8 @@ import {
   limit,
   getDocs,
 } from 'firebase/firestore';
+
+import { Header } from '../components/Header';
 
 interface LeaderboardLocationState {
   state: {
@@ -101,6 +103,7 @@ const Leaderboard = () => {
     </>
   ) : (
     <>
+      <Header />
       <div>Leaderboard</div>
       {leaderboard.map((entry) => {
         return (

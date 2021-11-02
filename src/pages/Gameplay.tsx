@@ -2,6 +2,7 @@ import { useHistory, useLocation } from 'react-router';
 import { Stage, Character, CharacterStatus } from '../types';
 import { useEffect, useRef, useState } from 'react';
 import { CharacterSelect } from '../components/CharacterSelect';
+import { Header } from '../components/Header';
 
 import {
   getFirestore,
@@ -32,6 +33,8 @@ const Gameplay = () => {
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [characterSelectX, setCharacterSelectX] = useState(0);
   const [characterSelectY, setCharacterSelectY] = useState(0);
+  const [characterOverlayX, setCharacterOverlayX] = useState(0);
+  const [characterOverlayY, setCharacterOverlayY] = useState(0);
   const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
   const [userSessionId, setUserSessionId] = useState('');
   const history = useHistory();
@@ -60,6 +63,8 @@ const Gameplay = () => {
     const yClick = e.pageY - e.target.offsetTop;
     setCharacterSelectX(xClick);
     setCharacterSelectY(yClick);
+    setCharacterOverlayX(e.pageX);
+    setCharacterOverlayY(e.pageY);
   };
 
   const checkIfClickIsWithinRadiusOfCoordinates = (
@@ -209,10 +214,11 @@ const Gameplay = () => {
 
   return (
     <>
+      <Header />
       {showCharacterSelect ? (
         <CharacterSelect
-          x={characterSelectX}
-          y={characterSelectY}
+          x={characterOverlayX}
+          y={characterOverlayY}
           checkCharacter={checkCharacter}
           characters={characters.current}
         />
