@@ -20,7 +20,7 @@ function App() {
       id: 'waldo-stage-2',
       path: 'stage-2',
       displayName: 'The Great Ball Game Players',
-      characterIds: ['waldo', 'wenda', 'odlaw', 'whitebeard'],
+      characterIds: ['waldo', 'odlaw', 'whitebeard'],
     },
     {
       id: 'waldo-stage-3',
