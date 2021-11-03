@@ -15,7 +15,7 @@ const LeaderboardForm: React.FC<LeaderboardFormProps> = ({
           value={name}
           maxLength={15}></input>
         <button className='pregame__start-game-button' type='submit'>
-          Submit
+          SUBMIT
         </button>
       </form>
     </div>

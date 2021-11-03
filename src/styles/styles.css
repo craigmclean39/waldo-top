@@ -189,6 +189,8 @@ html {
   border-radius: 0.25rem;
   border-bottom: solid 0.25rem #63a6f8;
   margin-top: 2rem;
+  font-family: 'Open Sans';
+  font-size: 1rem;
 }
 
 .pregame__start-game-button:hover {
