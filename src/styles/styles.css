@@ -153,12 +153,14 @@ html {
   width: clamp(200px, 80vw, 600px);
 }
 
-.pregame-flex {
+.pregame-flex,
+.leaderboard {
   display: flex;
   justify-content: center;
 }
 
-.pregame {
+.pregame,
+.leaderboard-inner {
   display: flex;
   width: clamp(0px, 100vw, 1200px);
   flex-direction: column;
@@ -223,4 +225,62 @@ html {
   justify-content: center;
   width: max-content;
   min-width: 100vw;
+}
+
+.leaderboard-entry {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+}
+
+.leaderboard-user {
+  background-color: #ee9699;
+  font-weight: 700;
+}
+
+.leaderboard-pos-name {
+  display: flex;
+}
+
+.leaderboard-position {
+  width: 2rem;
+}
+
+.leaderboard-title {
+  width: 100%;
+  padding: 2rem 2rem 1rem 2rem;
+  font-size: 1.4rem;
+  font-family: var(--title-font);
+}
+
+.leaderboard-form-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.leaderboard-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.leaderboard-form__text-input {
+  width: clamp(0px, 90vw, 600px);
+  padding: 1rem 0rem;
+  font-weight: 800;
+  border-radius: 0.25rem;
+  font-size: 2rem;
+}
+
+.leaderboard-form__title {
+  margin: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
 }

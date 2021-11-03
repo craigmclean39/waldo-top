@@ -1,3 +1,5 @@
+import { SyntheticEvent } from 'react-router/node_modules/@types/react';
+
 export interface Stage {
   id: string;
   path: string;
@@ -43,4 +45,21 @@ export interface CharacterSelectProps {
 export interface HeaderProps {
   hasTimer?: boolean;
   timerValue?: string;
+}
+
+export interface LeaderboardEntry {
+  name: string;
+  score: number;
+  isUser: boolean;
+  position?: number;
+}
+
+export interface LeaderboardRowProps {
+  entry: LeaderboardEntry;
+}
+
+export interface LeaderboardFormProps {
+  submitName(e: SyntheticEvent): any;
+  handleChange(e: React.FormEvent<HTMLInputElement>): any;
+  name: string;
 }
