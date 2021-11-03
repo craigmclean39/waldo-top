@@ -11,6 +11,12 @@ html {
   box-sizing: border-box;
 }
 
+.reticle {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+}
+
 .character-select {
   position: absolute;
   top: 50px;

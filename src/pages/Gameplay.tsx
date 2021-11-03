@@ -1,8 +1,15 @@
 import { useHistory, useLocation } from 'react-router';
-import { Stage, Character, CharacterStatus, HeaderProps } from '../types';
+import {
+  Stage,
+  Character,
+  CharacterStatus,
+  HeaderProps,
+  ReticlePosition,
+} from '../types';
 import { useEffect, useRef, useState } from 'react';
 import { CharacterSelect } from '../components/CharacterSelect';
 import { Header } from '../components/Header';
+import ReticleImage from '../images/focus.png';
 
 import {
   getFirestore,
@@ -30,6 +37,7 @@ const Gameplay = () => {
   const image = useRef(location.state.image);
   const stage = useRef(location.state.stage);
   const characters = useRef(location.state.characters);
+  const [reticles, setReticles] = useState<ReticlePosition[]>([]);
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [characterSelectX, setCharacterSelectX] = useState(0);
   const [characterSelectY, setCharacterSelectY] = useState(0);
@@ -191,6 +199,12 @@ const Gameplay = () => {
               const newCharacterStatus = [...characterStatus];
               newCharacterStatus[i].found = true;
               setCharacterStatus(newCharacterStatus);
+
+              const newReticles = [...reticles];
+              const newReticle = { x: characterOverlayX, y: characterOverlayY };
+              newReticles.push(newReticle);
+              setReticles(newReticles);
+
               break;
             }
           }
@@ -256,6 +270,16 @@ const Gameplay = () => {
             handleClick(e);
           }}></img>
       </div>
+
+      {reticles.map((retPos) => {
+        return (
+          <img
+            src={ReticleImage}
+            alt=''
+            className='reticle'
+            style={{ top: retPos.y - 12.5, left: retPos.x - 12.5 }}></img>
+        );
+      })}
     </>
   );
 };

@@ -63,3 +63,8 @@ export interface LeaderboardFormProps {
   handleChange(e: React.FormEvent<HTMLInputElement>): any;
   name: string;
 }
+
+export interface ReticlePosition {
+  x: number;
+  y: number;
+}
