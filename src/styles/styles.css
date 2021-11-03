@@ -57,15 +57,22 @@ html {
 
 .innerHeader {
   min-width: clamp(0px, 100vw, 1800px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo {
   height: clamp(75px, 8vw, 100px);
 }
 
+.header__title-flex {
+  display: flex;
+}
+
 .header__title {
   font-family: var(--title-font);
-  font-size: clamp(1.5rem, 5vw, 4rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   -webkit-text-stroke: 2px black; /* width and color */
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -84,6 +91,16 @@ html {
 .header__title-logo {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 480px) {
+  .header__title-flex {
+    flex-direction: column;
+  }
+
+  .header__title {
+    padding-top: 0rem;
+  }
 }
 
 .link {
@@ -192,4 +209,18 @@ html {
 
 .pregame__description {
   margin-left: 1rem;
+}
+
+.timer {
+  color: white;
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 1rem;
+}
+
+.gameplay__image-flex {
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  min-width: 100vw;
 }

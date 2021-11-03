@@ -39,3 +39,8 @@ export interface CharacterSelectProps {
   characters: Character[];
   characterStatus: CharacterStatus[];
 }
+
+export interface HeaderProps {
+  hasTimer?: boolean;
+  timerValue?: string;
+}

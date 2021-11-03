@@ -12,7 +12,6 @@ interface PregameLocationState {
 
 const Pregame = () => {
   const location = useLocation() as PregameLocationState;
-  const id = location.state.stage.id;
   const stage = location.state.stage;
 
   const reqImg = require(`../images/stages/${stage.path}/gameplay.png`).default;

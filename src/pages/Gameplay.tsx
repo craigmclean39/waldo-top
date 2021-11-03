@@ -1,5 +1,5 @@
 import { useHistory, useLocation } from 'react-router';
-import { Stage, Character, CharacterStatus } from '../types';
+import { Stage, Character, CharacterStatus, HeaderProps } from '../types';
 import { useEffect, useRef, useState } from 'react';
 import { CharacterSelect } from '../components/CharacterSelect';
 import { Header } from '../components/Header';
@@ -37,6 +37,10 @@ const Gameplay = () => {
   const [characterOverlayY, setCharacterOverlayY] = useState(0);
   const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
   const [userSessionId, setUserSessionId] = useState('');
+  const intervalRef = useRef<any>();
+  const [time, setTime] = useState('');
+  const timerStopped = useRef(false);
+  const prevTimerValue = useRef(0);
   const history = useHistory();
 
   useEffect(() => {
@@ -54,6 +58,20 @@ const Gameplay = () => {
   useEffect(() => {
     //Make an entry in the database with a server timestamp for leaderboard purposes
     createUserSessionInDbWithStartTime();
+  }, []);
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      if (!timerStopped.current) {
+        prevTimerValue.current = prevTimerValue.current + 100;
+      }
+
+      setTime((prevTimerValue.current / 1000).toFixed(2));
+    }, 100);
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   }, []);
 
   const handleClick = (e: any) => {
@@ -197,6 +215,7 @@ const Gameplay = () => {
     }
 
     if (gameOver) {
+      timerStopped.current = true;
       await updateUserSessionWithEndTimeAndTotalTime();
       setTimeout(gotoLeaderboard, 1000);
     }
@@ -212,9 +231,14 @@ const Gameplay = () => {
     });
   };
 
+  const headerProps: HeaderProps = {
+    hasTimer: true,
+    timerValue: time,
+  };
+
   return (
     <>
-      <Header />
+      <Header {...headerProps} />
       {showCharacterSelect ? (
         <CharacterSelect
           x={characterOverlayX}
@@ -224,12 +248,14 @@ const Gameplay = () => {
           characterStatus={characterStatus}
         />
       ) : null}
-      <img
-        src={image.current}
-        alt={stage.current.id}
-        onClick={(e) => {
-          handleClick(e);
-        }}></img>
+      <div className='gameplay__image-flex'>
+        <img
+          src={image.current}
+          alt={stage.current.id}
+          onClick={(e) => {
+            handleClick(e);
+          }}></img>
+      </div>
     </>
   );
 };
