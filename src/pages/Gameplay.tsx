@@ -277,7 +277,7 @@ const Gameplay = () => {
             src={ReticleImage}
             alt=''
             className='reticle'
-            style={{ top: retPos.y - 12.5, left: retPos.x - 12.5 }}></img>
+            style={{ top: retPos.y - 25, left: retPos.x - 25 }}></img>
         );
       })}
     </>
