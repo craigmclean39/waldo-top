@@ -23,6 +23,11 @@ export interface CharacterStatus {
   found: boolean;
 }
 
+export interface ReticlePosition {
+  x: number;
+  y: number;
+}
+
 //PROPS
 export interface StageSelectProps {
   stages: Stage[];
@@ -44,7 +49,7 @@ export interface CharacterSelectProps {
 
 export interface HeaderProps {
   hasTimer?: boolean;
-  timerValue?: string;
+  stopTimer?: boolean;
 }
 
 export interface LeaderboardEntry {
@@ -62,9 +67,4 @@ export interface LeaderboardFormProps {
   submitName(e: SyntheticEvent): any;
   handleChange(e: React.FormEvent<HTMLInputElement>): any;
   name: string;
-}
-
-export interface ReticlePosition {
-  x: number;
-  y: number;
 }

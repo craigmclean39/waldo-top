@@ -97,6 +97,7 @@ html {
 .header__title-logo {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 @media (max-width: 480px) {
@@ -157,6 +158,7 @@ html {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   width: clamp(200px, 80vw, 600px);
+  cursor: pointer;
 }
 
 .pregame-flex,
@@ -281,7 +283,7 @@ html {
 
 .leaderboard-form__text-input {
   width: clamp(0px, 90vw, 600px);
-  padding: 1rem 0rem;
+  padding: 1rem 1rem;
   font-weight: 800;
   border-radius: 0.25rem;
   font-size: 2rem;

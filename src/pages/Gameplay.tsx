@@ -45,10 +45,9 @@ const Gameplay = () => {
   const [characterOverlayY, setCharacterOverlayY] = useState(0);
   const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
   const [userSessionId, setUserSessionId] = useState('');
-  const intervalRef = useRef<any>();
-  const [time, setTime] = useState('');
+
   const timerStopped = useRef(false);
-  const prevTimerValue = useRef(0);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -68,7 +67,7 @@ const Gameplay = () => {
     createUserSessionInDbWithStartTime();
   }, []);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     intervalRef.current = setInterval(() => {
       if (!timerStopped.current) {
         prevTimerValue.current = prevTimerValue.current + 100;
@@ -80,7 +79,7 @@ const Gameplay = () => {
     return () => {
       clearInterval(intervalRef.current);
     };
-  }, []);
+  }, []); */
 
   const handleClick = (e: any) => {
     setShowCharacterSelect(!showCharacterSelect);
@@ -134,7 +133,6 @@ const Gameplay = () => {
     docRef: DocumentReference<DocumentData>,
     totalTime: number
   ) => {
-    // ('Total User Time on Level: ' + totalTime);
     await setDoc(
       docRef,
       {
@@ -170,8 +168,6 @@ const Gameplay = () => {
   };
 
   const checkCharacter = async (characterId: string) => {
-    // console.log(stage.current.id);
-
     const docRef = doc(
       getFirestore(),
       'characterPositions',
@@ -191,11 +187,9 @@ const Gameplay = () => {
           25
         )
       ) {
-        // console.log('You clicked ' + characterId);
         for (let i = 0; i < characterStatus.length; i++) {
           if (characterStatus[i].characterId === characterId) {
             if (!characterStatus[i].found) {
-              // console.log('You found ' + characterId);
               const newCharacterStatus = [...characterStatus];
               newCharacterStatus[i].found = true;
               setCharacterStatus(newCharacterStatus);
@@ -247,8 +241,18 @@ const Gameplay = () => {
 
   const headerProps: HeaderProps = {
     hasTimer: true,
-    timerValue: time,
+    stopTimer: timerStopped.current,
   };
+
+  const reticlesComp = reticles.map((retPos) => {
+    return (
+      <img
+        src={ReticleImage}
+        alt=''
+        className='reticle'
+        style={{ top: retPos.y - 25, left: retPos.x - 25 }}></img>
+    );
+  });
 
   return (
     <>
@@ -270,16 +274,7 @@ const Gameplay = () => {
             handleClick(e);
           }}></img>
       </div>
-
-      {reticles.map((retPos) => {
-        return (
-          <img
-            src={ReticleImage}
-            alt=''
-            className='reticle'
-            style={{ top: retPos.y - 25, left: retPos.x - 25 }}></img>
-        );
-      })}
+      {reticlesComp}
     </>
   );
 };

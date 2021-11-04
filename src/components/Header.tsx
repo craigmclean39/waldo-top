@@ -2,9 +2,31 @@ import Logo from '../images/logo.png';
 
 import { useHistory } from 'react-router';
 import { HeaderProps } from '../types';
+import { useEffect, useRef, useState } from 'react';
 
-const Header: React.FC<HeaderProps> = ({ hasTimer, timerValue }) => {
+const Header: React.FC<HeaderProps> = ({ hasTimer, stopTimer }) => {
   const history = useHistory();
+  const intervalRef = useRef<any>();
+  const [time, setTime] = useState('');
+  const prevTimerValue = useRef(0);
+
+  useEffect(() => {
+    if (hasTimer) {
+      intervalRef.current = setInterval(() => {
+        if (!stopTimer) {
+          prevTimerValue.current = prevTimerValue.current + 100;
+        }
+
+        setTime((prevTimerValue.current / 1000).toFixed(2));
+      }, 100);
+    }
+
+    return () => {
+      if (hasTimer) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [hasTimer, stopTimer]);
 
   const backToHome = () => {
     history.replace({
@@ -25,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ hasTimer, timerValue }) => {
               </div>
             </div>
           </div>
-          {hasTimer ? <div className='timer'>{timerValue}</div> : null}
+          {hasTimer ? <div className='timer'>{time}</div> : null}
         </div>
       </div>
       <div className='invisible-header'></div>
