@@ -1,46 +1,131 @@
-# Getting Started with Create React App
+<div id="top"></div>
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
 
-## Available Scripts
+<!-- [![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url] -->
 
-In the project directory, you can run:
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-### `yarn start`
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/craigmclean39/waldo-top">
+    <img src="./src/images/logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<h3 align="center">Where's Waldo</h3>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  <p align="center">
+    A Where's Waldo app created in React and using a Firebase server.
+    <br />
+    <a href="https://github.com/craigmclean39/waldo-top"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/craigmclean39/waldo-top">View Demo</a>
+    ·
+    <a href="https://github.com/craigmclean39/waldo-top/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/craigmclean39/waldo-top/issues">Request Feature</a>
+  </p>
+</div>
 
-### `yarn test`
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#libraries-used">Libraries Used</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+    </li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<!-- ABOUT THE PROJECT -->
 
-### `yarn build`
+## About The Project
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[![Product Name Screen Shot][product-screenshot]](https://craigmclean39.github.io/waldo-top/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<p>
+This project was part of The Odin Project Full Stack JavaScript curriculum.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+</p>
 
-### `yarn eject`
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Built With
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [React.js](https://reactjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Firebase](https://firebase.google.com/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Libraries Used
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [React Router](https://reactrouter.com/)
 
-## Learn More
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<!-- GETTING STARTED -->
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Getting Started
+
+Take a look at the demo <a href="https://craigmclean39.github.io/waldo-top/">here.</a>
+
+## Features
+
+<!-- CONTACT -->
+
+## Contact
+
+Craig McLean - craig@craigmclean.dev<br>
+https://www.linkedin.com/in/mcleancraig/
+
+Project Link: [https://github.com/craigmclean39/waldo-top](https://github.com/craigmclean39/waldo-top)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+- [The Odin Project](https://www.theodinproject.com/)
+- [Google Fonts](https://fonts.google.com/)
+- [Where's Waldo](https://waldo.candlewick.com/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/mcleancraig/
+[product-screenshot]: ./src/images/logo.png
