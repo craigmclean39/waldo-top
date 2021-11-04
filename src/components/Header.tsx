@@ -2,7 +2,7 @@ import Logo from '../images/logo.png';
 
 import { useHistory } from 'react-router';
 import { HeaderProps } from '../types';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const Header: React.FC<HeaderProps> = ({ hasTimer, stopTimer }) => {
   const history = useHistory();
@@ -10,15 +10,18 @@ const Header: React.FC<HeaderProps> = ({ hasTimer, stopTimer }) => {
   const [time, setTime] = useState('');
   const prevTimerValue = useRef(0);
 
+  const timerFunc = useCallback(() => {
+    console.log(stopTimer);
+    if (!stopTimer) {
+      prevTimerValue.current = prevTimerValue.current + 100;
+    }
+
+    setTime((prevTimerValue.current / 1000).toFixed(2));
+  }, [stopTimer]);
+
   useEffect(() => {
     if (hasTimer) {
-      intervalRef.current = setInterval(() => {
-        if (!stopTimer) {
-          prevTimerValue.current = prevTimerValue.current + 100;
-        }
-
-        setTime((prevTimerValue.current / 1000).toFixed(2));
-      }, 100);
+      intervalRef.current = setInterval(timerFunc, 100);
     }
 
     return () => {
@@ -26,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ hasTimer, stopTimer }) => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [hasTimer, stopTimer]);
+  }, [hasTimer, stopTimer, timerFunc]);
 
   const backToHome = () => {
     history.replace({

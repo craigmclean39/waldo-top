@@ -46,7 +46,7 @@ const Gameplay = () => {
   const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
   const [userSessionId, setUserSessionId] = useState('');
 
-  const timerStopped = useRef(false);
+  const [timerStopped, setTimerStopped] = useState(false);
 
   const history = useHistory();
 
@@ -66,20 +66,6 @@ const Gameplay = () => {
     //Make an entry in the database with a server timestamp for leaderboard purposes
     createUserSessionInDbWithStartTime();
   }, []);
-
-  /*   useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      if (!timerStopped.current) {
-        prevTimerValue.current = prevTimerValue.current + 100;
-      }
-
-      setTime((prevTimerValue.current / 1000).toFixed(2));
-    }, 100);
-
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, []); */
 
   const handleClick = (e: any) => {
     setShowCharacterSelect(!showCharacterSelect);
@@ -223,7 +209,7 @@ const Gameplay = () => {
     }
 
     if (gameOver) {
-      timerStopped.current = true;
+      setTimerStopped(true);
       await updateUserSessionWithEndTimeAndTotalTime();
       setTimeout(gotoLeaderboard, 1000);
     }
@@ -241,7 +227,7 @@ const Gameplay = () => {
 
   const headerProps: HeaderProps = {
     hasTimer: true,
-    stopTimer: timerStopped.current,
+    stopTimer: timerStopped,
   };
 
   const reticlesComp = reticles.map((retPos) => {
