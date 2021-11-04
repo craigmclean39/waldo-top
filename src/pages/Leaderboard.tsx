@@ -12,6 +12,7 @@ import {
   orderBy,
   limit,
   getDocs,
+  deleteDoc,
 } from 'firebase/firestore';
 
 import { Header } from '../components/Header';
@@ -39,6 +40,7 @@ const Leaderboard = () => {
   const submitName = async (e: SyntheticEvent) => {
     e.preventDefault();
     await addUserScoreToLeaderboard();
+    await deleteSession();
     await loadLeaderboard();
   };
 
@@ -80,7 +82,12 @@ const Leaderboard = () => {
         sessionId: sessionId.current,
       }
     );
+
     setNameEntered(true);
+  };
+
+  const deleteSession = async () => {
+    await deleteDoc(doc(getFirestore(), 'userTimestamps', sessionId.current));
   };
 
   const getUsersScore = async () => {
