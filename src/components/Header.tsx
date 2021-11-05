@@ -11,7 +11,6 @@ const Header: React.FC<HeaderProps> = ({ hasTimer, stopTimer }) => {
   const prevTimerValue = useRef(0);
 
   const timerFunc = useCallback(() => {
-    console.log(stopTimer);
     if (!stopTimer) {
       prevTimerValue.current = prevTimerValue.current + 100;
     }
