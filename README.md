@@ -34,7 +34,7 @@
 <h3 align="center">Where's Waldo</h3>
 
   <p align="center">
-    A Where's Waldo app created in React and using a Firebase server.
+    A Where's Waldo app created in React with Typescript and Firebase.
     <br />
     <a href="https://github.com/craigmclean39/waldo-top"><strong>Explore the docs »</strong></a>
     <br />
@@ -74,7 +74,7 @@
 [![Product Name Screen Shot][product-screenshot]](https://craigmclean39.github.io/waldo-top/)
 
 <p>
-This project was part of The Odin Project Full Stack JavaScript curriculum.
+This project was part of The Odin Project Full Stack JavaScript curriculum. The intention of the project was to gain experience using a BaaS (Backend as a service). For this project I utilized the Firebase platform. The project was also created using React with React Router, and Typescript. On the server side I am storing the characters hidden locations for each stage. When the user makes a selection, their selected position is then compared to the server side position to determine whether they have successfully located the character. When the user begins a stage I am creating a session entry on the server, on creation it simply has a sessionId and the server timestamp for when the level was started. When the level is completed I then write another timestamp to the session to indicate the time they completed the level at. These two timestamps are then used to determine the total time the user spent on the stage. After completion the user is queried for their name, and the name along with their time, are stored in a leaderboard for the given stage.
 
 </p>
 
@@ -102,6 +102,21 @@ Take a look at the demo <a href="https://craigmclean39.github.io/waldo-top/">her
 
 ## Features
 
+- Select one of 4 stages to play.<br>
+  <img src="./readme-images/readme-stageselect.png">
+
+- See a list of characters to find.<br>
+  <img src="./readme-images/readme-pregame.png">
+- Find the hidden characters.<br>
+  <img src="./readme-images/readme-characteroverlay.png">
+  <img src="./readme-images/readme-gameplay2.png">
+- Attempt to get a highscore!<br>
+  <img src="./readme-images/readme-leaderboard.png">
+
+- Full mobile support<br>
+<img src="./readme-images/readme-stageselect-mobile.png">
+<img src="./readme-images/readme-gameplay-mobile.png">
+<img src="./readme-images/readme-leaderboard-mobile.png">
 <!-- CONTACT -->
 
 ## Contact
@@ -128,4 +143,4 @@ Project Link: [https://github.com/craigmclean39/waldo-top](https://github.com/cr
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/mcleancraig/
-[product-screenshot]: ./src/images/logo.png
+[product-screenshot]: ./readme-images/readme-gameplay.png
