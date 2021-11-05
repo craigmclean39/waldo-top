@@ -183,7 +183,7 @@ html {
 }
 
 .pregame__character {
-  width: clamp(100px, 25vw, 300px);
+  width: clamp(80px, 25vw, 300px);
 }
 
 .pregame__start-game-button {
