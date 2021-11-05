@@ -39,16 +39,22 @@ const Gameplay = () => {
   const characters = useRef(location.state.characters);
   const [reticles, setReticles] = useState<ReticlePosition[]>([]);
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
-  const [characterSelectX, setCharacterSelectX] = useState(0);
-  const [characterSelectY, setCharacterSelectY] = useState(0);
-  const [characterOverlayX, setCharacterOverlayX] = useState(0);
-  const [characterOverlayY, setCharacterOverlayY] = useState(0);
+
+  const [clickAdjustedToImageX, setClickAdjustedToImageX] = useState(0);
+  const [clickAdjustedToImageY, setClickAdjustedToImageY] = useState(0);
+  const [clickPageX, setClickPageX] = useState(0);
+  const [clickPageY, setClickPageY] = useState(0);
+
   const [characterStatus, setCharacterStatus] = useState<CharacterStatus[]>([]);
   const [userSessionId, setUserSessionId] = useState('');
 
   const [timerStopped, setTimerStopped] = useState(false);
 
   const history = useHistory();
+
+  let imageDomRef: HTMLImageElement | null = null;
+  const [imageOffsetLeft, setImageOffsetLeft] = useState(0);
+  const [imageOffsetTop, setImageOffsetTop] = useState(0);
 
   useEffect(() => {
     setCharacterStatus(
@@ -67,15 +73,29 @@ const Gameplay = () => {
     createUserSessionInDbWithStartTime();
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (imageDomRef != null) {
+        setImageOffsetTop(imageDomRef.offsetTop);
+        setImageOffsetLeft(imageDomRef.offsetLeft);
+      }
+    });
+  }, [imageDomRef]);
+
   const handleClick = (e: any) => {
     setShowCharacterSelect(!showCharacterSelect);
-    // console.log(e);
-    const xClick = e.pageX - e.target.offsetLeft;
-    const yClick = e.pageY - e.target.offsetTop;
-    setCharacterSelectX(xClick);
-    setCharacterSelectY(yClick);
-    setCharacterOverlayX(e.pageX);
-    setCharacterOverlayY(e.pageY);
+    setClickAdjustedToImageX(e.pageX - e.target.offsetLeft);
+    setClickAdjustedToImageY(e.pageY - e.target.offsetTop);
+    setClickPageX(e.pageX);
+    setClickPageY(e.pageY);
+  };
+
+  const imageRefCallback = (e: HTMLImageElement) => {
+    if (e != null) {
+      setImageOffsetLeft(e.offsetLeft);
+      setImageOffsetTop(e.offsetTop);
+      imageDomRef = e;
+    }
   };
 
   const checkIfClickIsWithinRadiusOfCoordinates = (
@@ -166,8 +186,8 @@ const Gameplay = () => {
 
       if (
         checkIfClickIsWithinRadiusOfCoordinates(
-          characterSelectX,
-          characterSelectY,
+          clickAdjustedToImageX,
+          clickAdjustedToImageY,
           charPosition[0],
           charPosition[1],
           25
@@ -181,7 +201,10 @@ const Gameplay = () => {
               setCharacterStatus(newCharacterStatus);
 
               const newReticles = [...reticles];
-              const newReticle = { x: characterOverlayX, y: characterOverlayY };
+              const newReticle = {
+                x: clickAdjustedToImageX,
+                y: clickAdjustedToImageY,
+              };
               newReticles.push(newReticle);
               setReticles(newReticles);
 
@@ -230,13 +253,16 @@ const Gameplay = () => {
     stopTimer: timerStopped,
   };
 
-  const reticlesComp = reticles.map((retPos) => {
+  const reticleImgElements = reticles.map((retPos) => {
     return (
       <img
         src={ReticleImage}
         alt=''
         className='reticle'
-        style={{ top: retPos.y - 25, left: retPos.x - 25 }}></img>
+        style={{
+          top: retPos.y - 25 + imageOffsetTop,
+          left: retPos.x - 25 + imageOffsetLeft,
+        }}></img>
     );
   });
 
@@ -245,8 +271,8 @@ const Gameplay = () => {
       <Header {...headerProps} />
       {showCharacterSelect ? (
         <CharacterSelect
-          x={characterOverlayX}
-          y={characterOverlayY}
+          x={clickPageX}
+          y={clickPageY}
           checkCharacter={checkCharacter}
           characters={characters.current}
           characterStatus={characterStatus}
@@ -254,13 +280,14 @@ const Gameplay = () => {
       ) : null}
       <div className='gameplay__image-flex'>
         <img
+          ref={imageRefCallback}
           src={image.current}
           alt={stage.current.id}
           onClick={(e) => {
             handleClick(e);
           }}></img>
       </div>
-      {reticlesComp}
+      {reticleImgElements}
     </>
   );
 };
