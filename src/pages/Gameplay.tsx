@@ -90,8 +90,17 @@ const Gameplay = () => {
     setShowCharacterSelect(!showCharacterSelect);
     setClickAdjustedToImageX(e.pageX - imageOffsetLeft);
     setClickAdjustedToImageY(e.pageY - imageOffsetTop);
+
+    console.log(e);
+    console.log(window);
+
     setClickPageX(e.pageX);
     setClickPageY(e.pageY);
+
+    //If the select character overlay is going to fall off the screen, move it over
+    if (window.innerWidth - e.clientX < 135) {
+      setClickPageX(e.pageX - (135 - (window.innerWidth - e.clientX)));
+    }
   };
 
   const imageRefCallback = (e: HTMLImageElement) => {

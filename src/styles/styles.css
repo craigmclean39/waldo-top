@@ -283,7 +283,7 @@ html {
 }
 
 .leaderboard-form__text-input {
-  width: clamp(0px, 90vw, 600px);
+  width: clamp(0px, 85vw, 600px);
   padding: 1rem 1rem;
   font-weight: 800;
   border-radius: 0.25rem;
