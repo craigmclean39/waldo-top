@@ -56,6 +56,10 @@ const Gameplay = () => {
   const [imageOffsetLeft, setImageOffsetLeft] = useState(0);
   const [imageOffsetTop, setImageOffsetTop] = useState(0);
 
+  const [foundOverlayVisible, setFoundOverlayVisible] = useState(false);
+  const [foundCharacterDisplayName, setFoundCharacterDisplayName] =
+    useState('');
+
   useEffect(() => {
     setCharacterStatus(
       characters.current.map((character) => {
@@ -84,8 +88,8 @@ const Gameplay = () => {
 
   const handleClick = (e: any) => {
     setShowCharacterSelect(!showCharacterSelect);
-    setClickAdjustedToImageX(e.pageX - e.target.offsetLeft);
-    setClickAdjustedToImageY(e.pageY - e.target.offsetTop);
+    setClickAdjustedToImageX(e.pageX - imageOffsetLeft);
+    setClickAdjustedToImageY(e.pageY - imageOffsetTop);
     setClickPageX(e.pageX);
     setClickPageY(e.pageY);
   };
@@ -208,6 +212,20 @@ const Gameplay = () => {
               newReticles.push(newReticle);
               setReticles(newReticles);
 
+              setFoundOverlayVisible(true);
+              for (let i = 0; i < characters.current.length; i++) {
+                if (characters.current[i].id === characterId) {
+                  setFoundCharacterDisplayName(
+                    characters.current[i].displayName
+                  );
+                  break;
+                }
+              }
+
+              setTimeout(() => {
+                setFoundOverlayVisible(false);
+              }, 1500);
+
               break;
             }
           }
@@ -288,6 +306,16 @@ const Gameplay = () => {
           }}></img>
       </div>
       {reticleImgElements}
+      {foundOverlayVisible ? (
+        <div
+          className='gameplay__found-container'
+          onClick={(e) => {
+            setFoundOverlayVisible(false);
+            handleClick(e);
+          }}>
+          <div className='gameplay__found slide-in-fwd-center'>{`You found ${foundCharacterDisplayName}`}</div>
+        </div>
+      ) : null}
     </>
   );
 };
