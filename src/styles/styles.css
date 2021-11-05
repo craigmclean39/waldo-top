@@ -63,7 +63,7 @@ html {
 }
 
 .innerHeader {
-  min-width: clamp(0px, 100vw, 1800px);
+  min-width: clamp(300px, 100vw, 1800px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -123,7 +123,7 @@ html {
 }
 
 .inner-container {
-  min-width: clamp(0px, 100vw, 1400px);
+  min-width: clamp(300px, 100vw, 1400px);
   max-width: 1400px;
 }
 
@@ -183,12 +183,12 @@ html {
 }
 
 .pregame__character {
-  width: clamp(0px, 25vw, 300px);
+  width: clamp(100px, 25vw, 300px);
 }
 
 .pregame__start-game-button {
   border: none;
-  width: clamp(0px, 90vw, 600px);
+  width: clamp(100px, 90vw, 600px);
   background-color: var(--waldo-blue);
   text-align: center;
   font-weight: 800;
@@ -283,7 +283,7 @@ html {
 }
 
 .leaderboard-form__text-input {
-  width: clamp(0px, 85vw, 600px);
+  width: clamp(100px, 85vw, 600px);
   padding: 1rem 1rem;
   font-weight: 800;
   border-radius: 0.25rem;
