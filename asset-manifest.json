@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/waldo-top/static/css/main.800e388e.chunk.css",
+    "main.js": "/waldo-top/static/js/main.0ac766e2.chunk.js",
+    "main.js.map": "/waldo-top/static/js/main.0ac766e2.chunk.js.map",
+    "runtime-main.js": "/waldo-top/static/js/runtime-main.ac4b3ef9.js",
+    "runtime-main.js.map": "/waldo-top/static/js/runtime-main.ac4b3ef9.js.map",
+    "static/js/2.8536709b.chunk.js": "/waldo-top/static/js/2.8536709b.chunk.js",
+    "static/js/2.8536709b.chunk.js.map": "/waldo-top/static/js/2.8536709b.chunk.js.map",
+    "index.html": "/waldo-top/index.html",
+    "static/css/main.800e388e.chunk.css.map": "/waldo-top/static/css/main.800e388e.chunk.css.map",
+    "static/js/2.8536709b.chunk.js.LICENSE.txt": "/waldo-top/static/js/2.8536709b.chunk.js.LICENSE.txt",
+    "static/media/focus.d21650fc.png": "/waldo-top/static/media/focus.d21650fc.png",
+    "static/media/gameplay.png": "/waldo-top/static/media/gameplay.f0da6319.png",
+    "static/media/logo.bffd375b.png": "/waldo-top/static/media/logo.bffd375b.png",
+    "static/media/fonts.css": "/waldo-top/static/media/open-sans-v27-latin-regular.d4c15d4c.ttf",
+    "static/media/odlaw-small.png": "/waldo-top/static/media/odlaw-small.208e5d8b.png",
+    "static/media/odlaw.png": "/waldo-top/static/media/odlaw.64657574.png",
+    "static/media/thumbnail.png": "/waldo-top/static/media/thumbnail.baa3b0f4.png",
+    "static/media/waldo-small.png": "/waldo-top/static/media/waldo-small.074e131a.png",
+    "static/media/waldo.png": "/waldo-top/static/media/waldo.74bef414.png",
+    "static/media/wenda-small.png": "/waldo-top/static/media/wenda-small.a4f24bd9.png",
+    "static/media/wenda.png": "/waldo-top/static/media/wenda.645fc250.png",
+    "static/media/whitebeard-small.png": "/waldo-top/static/media/whitebeard-small.e4d48c9e.png",
+    "static/media/whitebeard.png": "/waldo-top/static/media/whitebeard.2f7a3c16.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ac4b3ef9.js",
+    "static/js/2.8536709b.chunk.js",
+    "static/css/main.800e388e.chunk.css",
+    "static/js/main.0ac766e2.chunk.js"
+  ]
+}
